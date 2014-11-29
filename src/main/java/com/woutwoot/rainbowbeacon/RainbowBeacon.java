@@ -15,6 +15,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by Wout on 29/11/2014.
@@ -22,7 +23,7 @@ import java.util.List;
 public class RainbowBeacon extends JavaPlugin implements CommandExecutor, Listener {
 
     private List<RainbowBlock> rainbowBlocks = new ArrayList<>();
-    private List<Creator> creators = new ArrayList<>();
+    private List<UUID> creators = new ArrayList<>();
     private static RainbowBeacon instance;
 
     @Override
@@ -53,16 +54,18 @@ public class RainbowBeacon extends JavaPlugin implements CommandExecutor, Listen
             } else {
                 sender.sendMessage("No permissions. You need rainbowbeacon.use");
             }
+            return true;
         }
         return false;
     }
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+        if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             if (creators.contains(event.getPlayer())) {
                 toggleBlock(event.getClickedBlock().getLocation());
                 event.getPlayer().sendMessage(ChatColor.AQUA + "Done!");
+                event.setCancelled(true);
             }
         }
     }
@@ -80,15 +83,23 @@ public class RainbowBeacon extends JavaPlugin implements CommandExecutor, Listen
     }
 
     public void removeBlock(Location l) {
-        this.rainbowBlocks.remove(l);
+        RainbowBlock remove = null;
+        for (RainbowBlock b : this.rainbowBlocks) {
+            if (b.getLocation().equals(l)) {
+                remove = b;
+            }
+        }
+        if (remove != null) {
+            rainbowBlocks.remove(remove);
+        }
     }
 
     public boolean toggleCreator(Player player) {
-        if (this.creators.contains(player)) {
-            this.creators.remove(player);
+        if (this.creators.contains(player.getUniqueId())) {
+            this.creators.remove(player.getUniqueId());
             return false;
         } else {
-            this.creators.add(new Creator(player));
+            this.creators.add(player.getUniqueId());
             return true;
         }
     }

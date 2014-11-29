@@ -38,6 +38,7 @@ public class RainbowBlock {
             return;
         }
         data++;
+        location.getBlock().setType(Material.STAINED_GLASS);
         location.getBlock().setData((byte) data);
         location.getBlock().setType(Material.STAINED_GLASS);
     }
