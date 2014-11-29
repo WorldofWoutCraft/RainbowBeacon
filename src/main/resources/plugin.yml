@@ -2,7 +2,7 @@
  version: 1.0
  description: RainbowBeaconzzzz!!!
  author: woutwoot
- main: com.woutwoot.RainbowBeacon
+ main: com.woutwoot.rainbowbeacon.RainbowBeacon
  database: false
 
  commands:
