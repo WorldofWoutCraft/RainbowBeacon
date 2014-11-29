@@ -1,0 +1,12 @@
+ name: RainbowBeacon
+ version: 1.0
+ description: RainbowBeaconzzzz!!!
+ author: woutwoot
+ main: com.woutwoot.RainbowBeacon
+ database: false
+
+ commands:
+   rbeacon:
+     description: Main command for TowerGame.
+     aliases: [rb, rainbowbeacon]
+     usage: Syntax error! Try /bainbowbeacon help to find out more.
