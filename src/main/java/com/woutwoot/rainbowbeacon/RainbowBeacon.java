@@ -72,18 +72,19 @@ public class RainbowBeacon extends JavaPlugin implements CommandExecutor, Listen
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getAction().equals(Action.RIGHT_CLICK_BLOCK) || event.getAction().equals(Action.LEFT_CLICK_BLOCK)) {
             if (creators.contains(event.getPlayer().getUniqueId())) {
-                toggleBlock(event.getClickedBlock().getLocation());
-                event.getPlayer().sendMessage(ChatColor.AQUA + "Done!");
+                event.getPlayer().sendMessage(ChatColor.AQUA + toggleBlock(event.getClickedBlock().getLocation()));
                 event.setCancelled(true);
             }
         }
     }
 
-    private void toggleBlock(Location location) {
+    private String toggleBlock(Location location) {
         if (this.rainbowBlocks.contains(location)) {
             removeBlock(location);
+            return "Block removed.";
         } else {
             addBlock(location);
+            return "Block added.";
         }
     }
 

@@ -33,20 +33,19 @@ public class RainbowBlock {
     }
 
     public void nextColor() {
-        if (data == 15) {
+        if (data >= 15) {
             data = 1;
             return;
         }
         data++;
         location.getBlock().setType(Material.STAINED_GLASS);
         location.getBlock().setData((byte) data);
-        location.getBlock().setType(Material.STAINED_GLASS);
     }
 
     @Override
     public boolean equals(Object o) {
         if (o instanceof Location) {
-            if (((Location) o).equals(this.getLocation())) {
+            if (o.equals(this.getLocation())) {
                 return true;
             }
         } else if (o instanceof RainbowBlock) {
